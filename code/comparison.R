@@ -15,9 +15,9 @@ library("ggpubr")
 lrm <- comets:::lrm
 drlrt <- function(Y, X, Z, B = 499, modelX = "lrm", ...) {
   N <- NROW(Y)
+  m0 <- survival::coxph(Y ~ Z)
   compute_lr <- function(Y, X, Z) {
     m1 <- survival::coxph(Y ~ X + Z)
-    m0 <- survival::coxph(Y ~ Z)
     2 * (stats::logLik(m1) - stats::logLik(m0))
   }
   LR <- compute_lr(Y, X, Z)
